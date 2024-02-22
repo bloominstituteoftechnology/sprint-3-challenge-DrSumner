@@ -58,7 +58,36 @@
       // 🧠 Implement a `getAllReversed` method which returns the ints in reverse order
       // ❗ WARNING: except for `getAllReversed`, methods must respect the order of the integers
       // ❗ WARNING: note that none of the methods actually mutate the `ints` property
-
+        constructor(...int){
+          this.ints = int
+          this.even = []
+          this.negative = []
+          this.squared = []
+          this.popper = []
+          this.pusher = []
+          this.nth = []
+          this.reverse = []
+          
+        }
+        getAll (){return this.ints}
+        getEvens(){ this.even = this.ints.filter(int => int % 2 === 0 );return this.even}
+        getNegatives(){this.negative = this.ints.filter(int => int < 0) ; return this.negative}
+        getAllSquared(){this.squared = this.ints.map(int => int ** 2); return this.squared}
+        pop(){this.popper = this.ints.pop(); return this.popper}
+        push(int){this.ints.push(int); this.pusher = this.ints; return this.pusher}
+        getEveryNth(n){ 
+          this.nth = []
+          let something = 0
+         for(let i =0; i < this.ints.length; i++){
+          if(i === something){
+            this.nth.push(this.ints[i]); something += n ; } 
+         } return this.nth;
+         }
+         getAllReversed(){
+          for(let i = this.ints.length - 1; i>= 0; i--){
+            this.reverse.push(this.ints[i])
+          } return this.reverse
+         }
     }
 
     // 👉 CHALLENGE 2 NerfGun
@@ -76,7 +105,43 @@
       //      * When engaging the safety, return "Safety enabled!"
       //      * When disengaging the safety, return "Safety disabled!"
       // 🌟 HINT: instances need to keep track of their maximum capacity as well as their current capacity
-
+        constructor(num){
+          this.maxCapacity = num
+          this.ammo = num
+          this.safety = true
+        }
+        shoot(){
+          let result
+          if(this.ammo > 0 && !this.safety){
+            result = "Bang!"; this.ammo--
+          } else if (this.ammo === 0 || !!this.safety){
+            result = "Click!"
+          } return result
+        }
+        reload(int){
+          let result
+          // console.log(this.ammo)
+          // console.log(this.maxCapacity)
+          // console.log(int)
+          if(int <= 0 || typeof int !== "number"){
+            result = "Error reloading!"; return result
+          } else{
+            this.ammo += int
+            // console.log(this.ammo)
+          if(this.ammo > this.maxCapacity){
+            this.ammo = this.maxCapacity
+          }  result = `${this.ammo} projectiles left!`}
+          return result
+        }
+        toggleSafety(){
+          let result
+          this.safety = !this.safety
+          if(this.safety === true){
+            result = "Safety enabled!"
+          } else if (!this.safety === true){
+            result = "Safety disabled!"
+          } return result
+        }
     }
 
     // 👉 CHALLENGE 3 EBook
@@ -95,7 +160,24 @@
       //    ebook.next() // returns null
       // 🌟 HINT: remember about the `slice` method which strings and arrays have
       // ❗ Feel free to implement `back`, although this is not required nor graded
+      constructor(str, int){
+        this.book = str
+        this.number = int
+        this.pageLimit = int
+        this.arr = this.book.split('')
+        this.n = 0
+        
+      }
+      next(){
+        let letters = []
+   
+       if(this.n < this.arr.length)
+        {letters = this.arr.slice(this.n, this.number)
+        this.n += this.pageLimit; this.number += this.pageLimit; letters = letters.join(''); ;; return letters}
+        else {letters = null
+          this.n += this.pageLimit; this.number += this.pageLimit;; return letters}
 
+      }
     }
 
     // 👉 CHALLENGE 4 AntFarm
@@ -130,7 +212,40 @@
       //      console.log(list) // prints ["a"]
       // 👉 HINT: if you are not feeling confident with map and filter, solve the problem with for loops,
       //      and with the piece of mind of all tests passing, refactor to use map/filter
-
+        constructor(...str){
+          this.ants = []
+          for(let i = 0; i < str.length; i++){
+            let ant = {name: '', health : 100}
+            ant.name = str[i]; this.ants.push(ant);}  
+        }
+        work(){
+          let result
+          result =  (this.ants.length > 0 ?  `${this.ants.length} ants starting work!` : "No ants here. Did you work them to death?")
+         for(let prop in this.ants){
+          this.ants[prop].health -= 20
+          
+          }this.ants = this.ants.filter( prop => prop.health > 0 )
+         
+          return result
+          
+         
+        
+        }
+        feed(name){
+          let result
+          let tally = 0
+          for(let prop in this.ants){
+            if(this.ants[prop].name === name){
+              this.ants[prop].health += 15;
+              result = "Yum!"
+            } else if ( name !== this.ants[prop].name){
+              tally++}
+              if(tally === this.ants.length){
+                result = `${name} not found!`
+              } 
+            
+          } return result
+        }
     }
 
     // 🧪 TESTS, do not make any changes below this line ===================
